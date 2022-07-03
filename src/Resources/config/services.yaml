@@ -1,0 +1,32 @@
+services:
+
+    bugloos_api_versioning.generate_route_config_command:
+        class: Bugloos\ApiVersioningBundle\Command\AddRouteConfigsToRouteFilesCommand
+        autowire: true
+        tags:
+            - { name: 'console.command', command: 'api-versioning:generate-route-configs' }
+        arguments:
+            $apiVersioningHandler: '@Bugloos\ApiVersioningBundle\Service\ApiVersioningHandler'
+
+    bugloos_api_versioning.prepare_route_files_command:
+        class: Bugloos\ApiVersioningBundle\Command\PrepareRouteFilesCommand
+        autowire: true
+        tags:
+            - { name: 'console.command', command: 'api-versioning:prepare-route-files' }
+        arguments:
+            $nextVersions: '%next_versions%'
+
+    Bugloos\ApiVersioningBundle\Service\ApiVersioningHandler:
+#        public: true
+#        autowire: true
+        arguments:
+            $router: '@Symfony\Component\Routing\RouterInterface'
+            $baseVersion: '%base_version%'
+            $nextVersions: '%next_versions%'
+            $deletedRoutes: '%deleted_routes%'
+
+    Bugloos\ApiVersioningBundle\Command\PrepareRouteFilesCommand:
+        arguments:
+            $nextVersions: '%next_versions%'
+
+#    Bugloos\FaultToleranceBundle\RequestLog\RequestLog: ~
