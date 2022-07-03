@@ -1,5 +1,4 @@
 services:
-
     bugloos_api_versioning.generate_route_config_command:
         class: Bugloos\ApiVersioningBundle\Command\AddRouteConfigsToRouteFilesCommand
         autowire: true
@@ -17,8 +16,6 @@ services:
             $nextVersions: '%next_versions%'
 
     Bugloos\ApiVersioningBundle\Service\ApiVersioningHandler:
-#        public: true
-#        autowire: true
         arguments:
             $router: '@Symfony\Component\Routing\RouterInterface'
             $baseVersion: '%base_version%'
@@ -28,5 +25,3 @@ services:
     Bugloos\ApiVersioningBundle\Command\PrepareRouteFilesCommand:
         arguments:
             $nextVersions: '%next_versions%'
-
-#    Bugloos\FaultToleranceBundle\RequestLog\RequestLog: ~
